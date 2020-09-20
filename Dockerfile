@@ -7,14 +7,14 @@ RUN apt-get update && apt-get -y install \
 	less \
 	vim \
 	srecord \
-	unzip \
+	unzip xa65 gawk avr-libc \
 	wget \
 	gcc \
 	make &&\
 	mkdir /build && cd /build && wget https://github.com/cc65/cc65/archive/master.zip -O master.zip && unzip master.zip && rm -f master.zip &&\
 	cd /build/cc65-master &&\
 	export PREFIX=/opt/cc65 &&\
-	make &&\
+	CFLAGS=-std=c99 make &&\
 	make install &&\
 	cd / &&\
 	rm -rf /build &&\
