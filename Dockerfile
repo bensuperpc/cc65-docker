@@ -23,3 +23,6 @@ RUN apt-get update && apt-get -y install \
 
 ENV PATH /opt/cc65/bin:$PATH
 
+RUN git clone https://github.com/Bensuperpc/neslib.git && \
+	cd neslib && make -j8 && rm -rf neslib
+
