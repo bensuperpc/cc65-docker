@@ -1,24 +1,25 @@
-FROM debian:jessie
+FROM debian:buster-slim
 
-LABEL maintainer="matt@cactuar.net"
+LABEL maintainer="bensuperpc@gmail.com"
 LABEL version="0.1"
 
 RUN apt-get update && apt-get -y install \
 	less \
 	vim \
 	srecord \
-	unzip xa65 gawk avr-libc \
-	wget \
+	xa65 gawk avr-libc \
 	gcc \
+	git \
 	make &&\
-	mkdir /build && cd /build && wget https://github.com/cc65/cc65/archive/master.zip -O master.zip && unzip master.zip && rm -f master.zip &&\
-	cd /build/cc65-master &&\
+	mkdir /build && cd /build && git clone https://github.com/cc65/cc65.git &&\
+	cd /build/cc65 &&\
 	export PREFIX=/opt/cc65 &&\
-	CFLAGS=-std=c99 make &&\
+	CFLAGS="-std=c99 -O2" make -j8 &&\
 	make install &&\
 	cd / &&\
 	rm -rf /build &&\
-	apt-get -y purge unzip wget gcc && apt-get -y autoremove --purge
+	apt-get -y purge gcc && apt-get -y autoremove --purge && \
+	rm -rf /var/lib/apt/lists/*
 
 ENV PATH /opt/cc65/bin:$PATH
 
