@@ -27,7 +27,7 @@ jobs:
       - name: "🛠️ Build"
         run: docker build -t bensuperpc/cc65:$(date +%Y-%m-%d) -t bensuperpc/cc65:latest .
       - name: "📤 Upload to hub.docker.com"
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: |
             docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
             docker image push bensuperpc/cc65 --all-tags
