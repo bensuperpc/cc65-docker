@@ -9,10 +9,19 @@ DATE_FULL := $(shell date +%Y-%m-%d_%H:%M:%S)
 UUID := $(shell cat /proc/sys/kernel/random/uuid)
 DOCKER := docker
 
-ARCH_LIST = amd64 arm64 arm armv5 armv6 armv7 ppc64le s390x riscv64
+ARCH_LIST = amd64 arm64 arm ppc64le s390x riscv64
 
 $(ARCH_LIST): Dockerfile
 	$(DOCKER) buildx build . -f Dockerfile -t $(IMAGE):$@-$(TAG) -t $(IMAGE):$@-latest --build-arg BUILD_DATE=$(DATE_FULL) --platform linux/$@
+
+arm/v5: Dockerfile
+	$(DOCKER) buildx build . -f Dockerfile -t $(IMAGE):armv5-$(TAG) -t $(IMAGE):armv5-latest --build-arg BUILD_DATE=$(DATE_FULL) --platform linux/arm/v5
+
+arm/v6: Dockerfile
+	$(DOCKER) buildx build . -f Dockerfile -t $(IMAGE):armv6-$(TAG) -t $(IMAGE):armv6-latest --build-arg BUILD_DATE=$(DATE_FULL) --platform linux/arm/v6
+
+arm/v5: Dockerfile
+	$(DOCKER) buildx build . -f Dockerfile -t $(IMAGE):armv7-$(TAG) -t $(IMAGE):armv7-latest --build-arg BUILD_DATE=$(DATE_FULL) --platform linux/arm/v7
 
 build: $(ARCH_LIST)
 

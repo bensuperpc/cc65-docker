@@ -31,7 +31,7 @@ jobs:
       - name: "Docker QEMU"
         run: make qemu_x86
       - name: "🛠️ Build"
-        run: make build_${{ matrix.arch_name }}
+        run: make ${{ matrix.arch_name }}
       - name: "📤 Upload to hub.docker.com"
         if: ${{ github.ref == 'refs/heads/master' }}
         run: |
