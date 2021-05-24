@@ -29,13 +29,14 @@ build_armv6: Dockerfile
 build_armv7: Dockerfile
 	$(DOCKER) buildx build . -t $(IMAGE):armv7-$(DATE)-$(UUID) -t $(IMAGE):armv7-latest --platform linux/arm/v7
 
-build_riscv64: Dockerfile
-	$(DOCKER) buildx build . -t $(IMAGE):riscv64-$(DATE)-$(UUID) -t $(IMAGE):riscv64-latest --platform linux/riscv64
-
 build_ppc64le: Dockerfile
 	$(DOCKER) buildx build . -t $(IMAGE):ppc64le-$(DATE)-$(UUID) -t $(IMAGE):ppc64le-latest --platform linux/ppc64le
 
-build: build_amd64 build_arm64 build_arm build_armv5 build_armv6 build_armv7 build_riscv64 build_ppc64le
+# Not workin for now
+build_riscv64: Dockerfile
+	$(DOCKER) buildx build . -t $(IMAGE):riscv64-$(DATE)-$(UUID) -t $(IMAGE):riscv64-latest --platform linux/riscv64
+
+build: build_amd64 build_arm64 build_arm build_armv5 build_armv6 build_armv7 build_ppc64le
 
 push: build
 	$(DOCKER) image push $(IMAGE) --all-tags
