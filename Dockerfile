@@ -14,7 +14,7 @@ RUN apt-get update && apt-get -y install \
 	mkdir /build && cd /build && git clone https://github.com/cc65/cc65.git &&\
 	cd /build/cc65 &&\
 	export PREFIX=/opt/cc65 &&\
-	CFLAGS="-std=c99 -O2" make -j8 &&\
+	CFLAGS="-std=c99 -O2" make -j$(nproc) &&\
 	make install &&\
 	cd / &&\
 	rm -rf /build &&\
