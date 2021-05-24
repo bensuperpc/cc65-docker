@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch_name: [amd64, arm64, armv5, armv6, armv7, ppc64le]
+        arch_name: [amd64, arm64, armv5, armv6, armv7, ppc64le, s390x]
     steps:
       - name: "📥 Checkout Code"
         uses: actions/checkout@v2.2.0

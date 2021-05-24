@@ -36,7 +36,10 @@ build_ppc64le: Dockerfile
 build_riscv64: Dockerfile
 	$(DOCKER) buildx build . -t $(IMAGE):riscv64-$(DATE)-$(UUID) -t $(IMAGE):riscv64-latest --platform linux/riscv64
 
-build: build_amd64 build_arm64 build_arm build_armv5 build_armv6 build_armv7 build_ppc64le
+build_s390x: Dockerfile
+	$(DOCKER) buildx build . -t $(IMAGE):s390x-$(DATE)-$(UUID) -t $(IMAGE):s390x-latest --platform linux/s390x
+
+build: build_amd64 build_arm64 build_arm build_armv5 build_armv6 build_armv7 build_ppc64le build_s390x
 
 push: build
 	$(DOCKER) image push $(IMAGE) --all-tags
