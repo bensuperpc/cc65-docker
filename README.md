@@ -11,5 +11,5 @@ Usage:
 
 Build (If you want):
 ```
-# docker build -t bensuperpc/cc65 .
+# docker build -t bensuperpc/cc65 . or make linux/amd64
 ```
