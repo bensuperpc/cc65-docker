@@ -1,4 +1,4 @@
-name: cc65-docker
+name: cc65
 
 on:
   push:
@@ -16,26 +16,19 @@ on:
 
 jobs:
   image:
-    name: build and deploy
+    name: cc65
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      matrix:
-        arch_name: [amd64, arm64, arm, armv5, armv6, armv7, ppc64le, s390x]
     steps:
       - name: "📥 Checkout Code"
         uses: actions/checkout@v2.2.0
         with:
           submodules: 'recursive'
           fetch-depth: 0
-      - name: "Docker QEMU"
-        run: make qemu_x86
-      - name: "🛠️ Build"
-        run: make ${{ matrix.arch_name }}
-      - name: "📤 Upload to hub.docker.com"
-        if: ${{ github.ref == 'refs/heads/master' }}
+      - name: "🛠️ Docker QEMU"
+        run: make qemu
+      - name: "🛠️ Build and 📤 Upload to hub.docker.com"
         run: |
             docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-            docker image push bensuperpc/cc65 --all-tags
-      - name: "Clean"
+            make all
+      - name: "🧹 Clean"
         run: make clean
