@@ -41,6 +41,6 @@ LABEL org.label-schema.schema-version="1.0" \
 	  org.label-schema.version=$VERSION \
 	  org.label-schema.vendor="Bensuperpc" \
 	  org.label-schema.url="http://bensuperpc.com/" \
-	  org.label-schema.vcs-url="https://github.com/Bensuperpc/rcc65" \
+	  org.label-schema.vcs-url="https://github.com/Bensuperpc/cc65-docker" \
 	  org.label-schema.vcs-ref=$VCS_REF \
 	  org.label-schema.docker.cmd="docker build -t bensuperpc/cc65 -f Dockerfile ."
