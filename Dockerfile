@@ -7,8 +7,11 @@ RUN apt-get update && apt-get -y install \
 	srecord \
 	xa65 gawk avr-libc \
 	gcc \
+	g++ \
 	git \
-	make &&\
+	make \
+	ca-certificates \
+	--no-install-recommends &&\
 	mkdir /build && cd /build && git clone https://github.com/cc65/cc65.git &&\
 	cd /build/cc65 &&\
 	export PREFIX=/opt/cc65 &&\
@@ -29,8 +32,8 @@ ARG VERSION="1.0.0"
 ENV VERSION=$VERSION
 
 RUN apt-get update && apt-get -y install \
-	make git &&\
-	apt-get -y purge gcc && apt-get -y autoremove --purge && \
+	make git ca-certificates --no-install-recommends \
+	&& apt-get -y autoremove --purge && \
 	rm -rf /var/lib/apt/lists/*
 
 ARG BUILD_DATE
