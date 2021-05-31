@@ -1,11 +1,5 @@
 ARG DOCKER_IMAGE=debian:buster-slim
-FROM $DOCKER_IMAGE
-
-LABEL author="Bensuperpc <bensuperpc@gmail.com>"
-LABEL mantainer="Bensuperpc <bensuperpc@gmail.com>"
-
-ARG VERSION="1.0.0"
-ENV VERSION=$VERSION
+FROM $DOCKER_IMAGE AS builder
 
 RUN apt-get update && apt-get -y install \
 	less \
@@ -25,14 +19,29 @@ RUN apt-get update && apt-get -y install \
 	apt-get -y purge gcc && apt-get -y autoremove --purge && \
 	rm -rf /var/lib/apt/lists/*
 
+ARG DOCKER_IMAGE=debian:buster-slim
+FROM $DOCKER_IMAGE AS runtime
+
+LABEL author="Bensuperpc <bensuperpc@gmail.com>"
+LABEL mantainer="Bensuperpc <bensuperpc@gmail.com>"
+
+ARG VERSION="1.0.0"
+ENV VERSION=$VERSION
+
+RUN apt-get update && apt-get -y install \
+	make git &&\
+	apt-get -y purge gcc && apt-get -y autoremove --purge && \
+	rm -rf /var/lib/apt/lists/*
+
+ARG BUILD_DATE
+ARG VCS_REF
+
+COPY --from=builder /opt/cc65 /opt/cc65
+
 ENV PATH /opt/cc65/bin:$PATH
 
 RUN git clone https://github.com/Bensuperpc/neslib.git && \
 	cd neslib && make -j$(nproc) && rm -rf neslib
-
-
-ARG BUILD_DATE
-ARG VCS_REF
 
 LABEL org.label-schema.schema-version="1.0" \
 	  org.label-schema.build-date=$BUILD_DATE \
