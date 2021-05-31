@@ -60,4 +60,4 @@ qemu:
 clean:
 	$(DOCKER) images --filter='reference=$(IMAGE_NAME)' --format='{{.Repository}}:{{.Tag}}' | xargs -r $(DOCKER) rmi -f
 
-.PHONY: build push clean qemu_x86 $(ARCH_LIST) armv5 armv6 armv7 armv8
+.PHONY: build push clean qemu $(ARCH_LIST)
