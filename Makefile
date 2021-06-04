@@ -27,7 +27,7 @@ DOCKERFILE := Dockerfile
 DOCKER := docker
 
 TAG := $(shell date '+%Y%m%d')-$(shell git rev-parse --short HEAD)
-DATE_FULL := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
+DATE_FULL := $(shell date -u "+%Y-%m-%dT%H:%M:%SZ")
 UUID := $(shell cat /proc/sys/kernel/random/uuid)
 VERSION := 1.0.0
 
