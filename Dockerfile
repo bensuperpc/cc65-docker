@@ -1,4 +1,4 @@
-ARG DOCKER_IMAGE=debian:buster-slim
+ARG DOCKER_IMAGE=debian:bullseye-slim
 FROM $DOCKER_IMAGE AS builder
 
 RUN apt-get update && apt-get -y install \
@@ -22,7 +22,7 @@ RUN apt-get update && apt-get -y install \
 	apt-get -y purge gcc && apt-get -y autoremove --purge && \
 	rm -rf /var/lib/apt/lists/*
 
-ARG DOCKER_IMAGE=debian:buster-slim
+ARG DOCKER_IMAGE=debian:bullseye-slim
 FROM $DOCKER_IMAGE AS runtime
 
 LABEL author="Bensuperpc <bensuperpc@gmail.com>"

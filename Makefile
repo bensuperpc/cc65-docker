@@ -20,7 +20,7 @@
 #//  CPU: ALL                                                //
 #//                                                          //
 #//////////////////////////////////////////////////////////////
-BASE_IMAGE := debian:buster-slim
+BASE_IMAGE := debian:bullseye-slim
 IMAGE_NAME := bensuperpc/cc65
 DOCKERFILE := Dockerfile
 
@@ -31,7 +31,7 @@ DATE_FULL := $(shell date -u "+%Y-%m-%dT%H:%M:%SZ")
 UUID := $(shell cat /proc/sys/kernel/random/uuid)
 VERSION := 1.0.0
 
-#Not in debian buster : riscv64
+#Not in debian bullseye : riscv64
 
 ARCH_LIST := linux/amd64 linux/arm64 linux/ppc64le linux/s390x linux/386 linux/arm/v7 linux/arm/v6
 comma:= ,
@@ -53,8 +53,8 @@ push: all
 # https://github.com/linuxkit/linuxkit/tree/master/pkg/binfmt
 qemu:
 	export DOCKER_CLI_EXPERIMENTAL=enabled
-	$(DOCKER) run --rm --privileged linuxkit/binfmt:v0.8
-	$(DOCKER) buildx create --name mybuilder --driver docker-container --use
+	$(DOCKER) run --rm --privileged multiarch/qemu-user-static --reset -p yes
+	$(DOCKER) buildx create --name qemu_builder --driver docker-container --use
 	$(DOCKER) buildx inspect --bootstrap
 
 clean:
