@@ -1,0 +1,32 @@
+ARG BASE_IMAGE=debian:trixie
+FROM ${BASE_IMAGE} AS builder
+
+#include "common.debian"
+
+#include "common.build.cc65"
+
+ARG BASE_IMAGE=debian:trixie
+FROM ${BASE_IMAGE} AS final
+
+#include "common.label-and-env"
+
+RUN apt-get update && apt-get -y install \
+	make git ca-certificates curl \
+	--no-install-recommends \
+    && apt-get clean autoclean curl --yes \
+    && apt-get autoremove --purge --yes \
+    && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+COPY --from=builder /opt/cc65 /opt/cc65
+
+ENV PATH=/opt/cc65/bin:$PATH
+
+VOLUME [ "/work" ]
+WORKDIR /work
+
+#include "common.gosu"
+
+#include "common.entrypoint"
+
+CMD ["/bin/bash", "-l"]
+

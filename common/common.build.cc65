@@ -1,0 +1,5 @@
+RUN mkdir /build && cd /build && git clone https://github.com/cc65/cc65.git &&\
+	cd /build/cc65 &&\
+	export PREFIX=/opt/cc65 &&\
+	make -j$(nproc) &&\
+	make install

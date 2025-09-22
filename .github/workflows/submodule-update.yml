@@ -2,7 +2,7 @@ name: submodule-update
 
 on:
   schedule:
-    - cron: '30 22 * * *'
+    - cron: '00 22 * * *'
   workflow_dispatch:
 
 jobs:
@@ -11,17 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout Code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
-          token: ${{ secrets.CI_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           submodules: 'recursive'
           fetch-depth: 1
-      # Update references
       - name: Git Sumbodule Update
         run: |
           git pull --recurse-submodules
           git submodule update --remote --recursive
-      # Commit and push
       - name: Commit update
         run: |
           git config --global user.name 'Git bot'

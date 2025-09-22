@@ -11,16 +11,15 @@
 #//                                                          //
 #//////////////////////////////////////////////////////////////
 
-SUBDIRS ?= debian
-
-DOCKER_COMPOSITE_SOURCES = common.label-and-env common.entrypoint common.user \
-    common.debian common.gosu common.build.cc65
+# Base image
+BASE_IMAGE_REGISTRY ?= docker.io
+BASE_IMAGE_PATH ?=
+BASE_IMAGE_NAME ?= debian
+BASE_IMAGE_TAGS ?= trixie
 
 # Output docker image
-PROJECT_NAME ?= cc65
 AUTHOR ?= bensuperpc
-
-BASE_IMAGE_REGISTRY ?= docker.io
+WEB_SITE ?= bensuperpc.org
 
 OUTPUT_IMAGE_REGISTRY ?= docker.io
 OUTPUT_IMAGE_PATH ?= bensuperpc
@@ -29,7 +28,7 @@ OUTPUT_IMAGE_VERSION ?= 1.0.0
 
 TAG_WITH_BASE_IMAGE_NAME ?= yes
 
-WEB_SITE ?= bensuperpc.org
+WORKDIR ?= /work
 
 # Max CPU and memory
 CPUS ?= 8.0
@@ -40,7 +39,9 @@ TMPFS_SIZE ?= 4gb
 BUILD_IMAGE_CPU_SHARES ?= 1024
 BUILD_IMAGE_MEMORY ?= 16GB
 
-TEST_IMAGE_CMD ?= ./test/test.sh
+TEST_IMAGE_CMD ?= ls
+TEST_IMAGE_ARGS ?=
 RUN_IMAGE_CMD ?=
+RUN_IMAGE_ARGS ?=
 
-include template/DockerImages.mk
+include ../template/DockerImage.mk

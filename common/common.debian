@@ -1,0 +1,16 @@
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get -y install \
+	less \
+	vim \
+	srecord \
+	xa65 gawk avr-libc \
+	gcc \
+	g++ \
+	git \
+	make \
+	ca-certificates \
+	--no-install-recommends \
+    && apt-get clean autoclean --yes \
+    && apt-get autoremove --purge --yes \
+    && rm -rf /var/lib/{apt,dpkg,cache,log}/

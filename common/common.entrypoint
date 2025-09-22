@@ -1,0 +1,5 @@
+#COPY --from=root-project common/entrypoint.sh /entrypoint.sh
+COPY common/entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh && chown root:root /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]

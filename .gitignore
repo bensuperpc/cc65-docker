@@ -1,0 +1,27 @@
+builds/*
+sstate-cache/*
+downloads/*
+.vscode/settings.json
+*.log
+# Image files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg
+*.bmp
+*.jxl
+*.avif
+# Video files
+*.mp4
+*.webm
+*.mkv
+*.flv
+*.PNG
+
+*.png~
+
+*.torrent
+*/Dockerfile
+*/common/*
